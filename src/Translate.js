@@ -8,16 +8,26 @@ import NativeSelect from '@mui/material/NativeSelect';
 import InputLabel from '@mui/material/InputLabel';
 import Button from '@mui/material/Button';
 
-
+///https://libretranslate.de/?source=auto&target=fr&q=hello
 function Translate() {
 
   const [inputText, setInputText] = useState("")
   const [result, setReult] = useState("")
+  const [langlist, setLangList] = useState("")
 
+  /////translate
   const isTranslateText = () => {
     //console.log(inputText)
     setReult(inputText)
   }
+
+////language list 
+useEffect(() => {
+  axios.get(`https://libretranslate.de/languages`)
+  .then((response) => {
+    setLangList(response.data)
+  })
+},[])
   return (
     <div>
       <h1>Hello</h1>
@@ -36,14 +46,19 @@ function Translate() {
         </FormControl>
       <FormControl  sx={{ m: 1}} fullWidth>
       <InputLabel variant="standard" htmlFor="uncontrolled-native">
-    Age
+    Please Select Language..
   </InputLabel>
   <NativeSelect
     defaultValue={30}
   >
-    <option value={10}>Ten</option>
-    <option value={20}>Twenty</option>
-    <option value={30}>Thirty</option>
+    {langlist.map((lang, i) =>{
+      return(
+<option value={lang.code} key={i}>
+  {lang.name}
+</option>
+      )
+    })}
+    
   </NativeSelect>
       </FormControl>
       <FormControl  sx={{ m: 1 }} fullWidth >
