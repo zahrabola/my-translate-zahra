@@ -13,26 +13,59 @@ function Translate() {
   const [inputText, setInputText] = useState("");
   const [result, setReult] = useState("");
   const [langlist, setLangList] = useState([]);
-  const [selectlang, setSelectLang] = ("")
+  const [selectlang, setSelectLang] = ([]);
+  const [detectlang, setDetectLang] = ("");
+
+  ///source function
+  const getLangSource = () => {
+    axios.post(`https://libretranslate.de/detect`, {
+            q: inputText
+        })
+    .then((response) => {
+      setDetectLang(response.data[0].lang)
+    })
+    .catch(err => {
+      console.log(err)
+    });
+  }
 
   /////translate
   const isTranslateText = () => {
     //console.log(inputText)
     setReult(inputText);
+
+    getLangSource();
+    
+//data
+let data ={
+  q : inputText,
+  source:detectlang,
+  target: selectlang,
+}
+///post api 
+axios.post(`https://libretranslate.de/translate`, data)
+.then((response) => {
+  setReult(response.data.translatedText)
+})
+
+
   };
 
   ////language Key
    const languageKey = ( selectedlang ) => {
-    console.log(selectedlang.target.value)
-   }
+    ///console.log(selectedlang.target.value)
+    setSelectLang(selectedlang.target.value)
+   }/// connected to post api
 
   ////language list
   useEffect(() => {
     axios.get(`https://libretranslate.de/languages`).then((response) => {
       ////console.log(response.data)
       setLangList(response.data);
-    });
-  }, []);
+    }) 
+    getLangSource()
+    
+  }, [inputText]);
   return (
     <div>
       <h1>Hello</h1>
