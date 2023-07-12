@@ -13,12 +13,18 @@ function Translate() {
   const [inputText, setInputText] = useState("");
   const [result, setReult] = useState("");
   const [langlist, setLangList] = useState([]);
+  const [selectlang, setSelectLang] = ("")
 
   /////translate
   const isTranslateText = () => {
     //console.log(inputText)
     setReult(inputText);
   };
+
+  ////language Key
+   const languageKey = ( selectedlang ) => {
+    console.log(selectedlang.target.value)
+   }
 
   ////language list
   useEffect(() => {
@@ -47,7 +53,7 @@ function Translate() {
           <InputLabel variant="standard" htmlFor="uncontrolled-native">
             Please Select Language..
           </InputLabel>
-          <NativeSelect>
+          <NativeSelect onChange={languageKey}>
             <option value={1}> Please Select Language.. </option>
 
             {langlist.map((lang) => {
