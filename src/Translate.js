@@ -6,21 +6,32 @@ import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 import NativeSelect from '@mui/material/NativeSelect';
 import InputLabel from '@mui/material/InputLabel';
+import Button from '@mui/material/Button';
 
 
 function Translate() {
+
+  const [inputText, setInputText] = useState("")
+  const [result, setReult] = useState("")
+
+  const isTranslateText = () => {
+    //console.log(inputText)
+    setReult(inputText)
+  }
   return (
     <div>
+      <h1>Hello</h1>
 
       <Box margin={10}>
-      <FormControl  fullWidth>
+      <FormControl sx={{ m: 1}}  fullWidth>
       <TextField
           id="outlined-multiline-static"
-          label="Multiline"
+          label="Translate"
           multiline
-         
+          control="TextArea"
+          placeholder='Type Text to Translate..'
           rows={4}
-          defaultValue="Default Value"
+          onChange={(event) => setInputText(event.target.value)}
         />
         </FormControl>
       <FormControl  sx={{ m: 1}} fullWidth>
@@ -38,12 +49,14 @@ function Translate() {
       <FormControl  sx={{ m: 1 }} fullWidth >
       <TextField
           id="outlined-multiline-static"
-          label="Multiline"
+          label=" Results"
           multiline
+          placeholder='Your Result Translation..'
           rows={4}
-          defaultValue="Default Value"
+          value={result}
         />
       </FormControl>
+      <Button variant="contained" onClick={isTranslateText}>Translate</Button>
       </Box>
     
 
